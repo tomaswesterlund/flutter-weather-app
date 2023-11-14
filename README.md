@@ -1,6 +1,6 @@
 # Minimal Weather App
 ## Introduction
-A cloned minimal weather app written in Flutter originally created by Mitch Koko. A video guide (created by the same user) can be found [here](https://www.youtube.com/watch?v=yLtpMqvMgdY&ab_channel=MitchKoko).
+A cloned minimal weather app written in Flutter. Originally created by Mitch Koko with a video guide that can be found [here](https://www.youtube.com/watch?v=yLtpMqvMgdY&ab_channel=MitchKoko).
 
 ## Setup
 1. Create an account and get the API key from https://openweathermap.org/
