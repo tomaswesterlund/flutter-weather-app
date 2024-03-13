@@ -46,7 +46,7 @@ class _WeatherPageState extends State<WeatherPage> {
       case 'haze':
       case 'dust':
       case 'fog':
-        return 'assets/clouds.json';
+        return 'assets/cloud.json';
       case 'rain':
       case 'drizzle':
       case 'shower rain':
@@ -77,15 +77,15 @@ class _WeatherPageState extends State<WeatherPage> {
           children: [
             Text(
               "${_weather?.temperature.round()}°C",
-              style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold),
+              style: const TextStyle(fontSize: 42, fontWeight: FontWeight.bold),
             ),
             Text(
               _weather?.cityName ?? "Loading ...",
-              style: TextStyle(fontSize: 30),
+              style: const TextStyle(fontSize: 30),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Lottie.asset(getWeatherAnimation(_weather?.mainCondition)),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
           ],
         ),
       ),

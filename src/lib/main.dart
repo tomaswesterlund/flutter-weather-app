@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'pages/weather_page.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const  MaterialApp(
-      debugShowCheckedModeBanner: true,
+      debugShowCheckedModeBanner: false,
       home: WeatherPage(),
     );
   }
