@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:minimal_weather_app/services/weather_service.dart';
-
+import 'package:minimal_weather_app/providers/weather_provider.dart';
+import 'package:minimal_weather_app/widgets/loading_widget.dart';
+import 'package:provider/provider.dart';
 import '../models/weather_model.dart';
 
 class WeatherPage extends StatefulWidget {
@@ -12,27 +13,6 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-  // API key
-  final WeatherService _weatherService =
-      WeatherService(apiKey: "65b56408166bc2b50f81370d25492164");
-  Weather? _weather;
-
-  // Fetch weather
-  _fetchWeather() async {
-    // Get the current city
-    String cityName = await _weatherService.getCurrentCity();
-
-    // Get weather for city
-    try {
-      final weather = await _weatherService.getWeather(cityName);
-      setState(() {
-        _weather = weather;
-      });
-    } catch (e) {
-      print(e);
-    }
-  }
-
   // Weather animations
   String getWeatherAnimation(String? mainCondition) {
     if (mainCondition == null) {
@@ -63,32 +43,41 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   void initState() {
     super.initState();
-
-    // Fetch weather on startup
-    _fetchWeather();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "${_weather?.temperature.round()}°C",
-              style: const TextStyle(fontSize: 42, fontWeight: FontWeight.bold),
-            ),
-            Text(
-              _weather?.cityName ?? "Loading ...",
-              style: const TextStyle(fontSize: 30),
-            ),
-            const SizedBox(height: 20),
-            Lottie.asset(getWeatherAnimation(_weather?.mainCondition)),
-            const SizedBox(height: 20),
-          ],
+    return Consumer<WeatherProvider>(
+        builder: (context, weatherProvider, child) {
+      if (weatherProvider.lastFetchedWheater == null) {
+        weatherProvider.fetchWeatherForCurrentCity();
+      }
+
+      return Scaffold(
+        body: Center(
+            child: weatherProvider.lastFetchedWheater == null
+                ? LoadingWidget(title: "Getting weather data ...")
+                : getLoadedWiget(weatherProvider.lastFetchedWheater!)),
+      );
+    });
+  }
+
+  Widget getLoadedWiget(Weather weather) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          "${weather.temperature.round()}°C",
+          style: const TextStyle(fontSize: 42, fontWeight: FontWeight.bold),
         ),
-      ),
+        Text(
+          weather.cityName,
+          style: const TextStyle(fontSize: 30),
+        ),
+        const SizedBox(height: 20),
+        Lottie.asset(getWeatherAnimation(weather.mainCondition)),
+        const SizedBox(height: 20),
+      ],
     );
   }
 }

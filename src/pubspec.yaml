@@ -39,6 +39,8 @@ dependencies:
   geolocator: ^10.1.0
   geocoding: ^2.1.1
   lottie: ^2.7.0
+  awesome_extensions: ^2.0.17
+  provider: ^6.1.2
 
 dev_dependencies:
   flutter_test:

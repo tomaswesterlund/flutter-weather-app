@@ -1,9 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:minimal_weather_app/pages/loading_page.dart';
+import 'package:minimal_weather_app/providers/location_provider.dart';
+import 'package:minimal_weather_app/providers/weather_provider.dart';
+import 'package:provider/provider.dart';
 
 import 'pages/weather_page.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+     MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => LocationProvider()),
+        ChangeNotifierProvider(create: (_) => WeatherProvider(apiKey: "65b56408166bc2b50f81370d25492164")),
+
+      ],
+      child: const MyApp(),
+    ),
+  );
+
+  
 }
 
 class MyApp extends StatelessWidget {
@@ -11,9 +26,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const  MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: WeatherPage(),
+      home: LoadingPage(),
     );
   }
 }
