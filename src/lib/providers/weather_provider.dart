@@ -2,9 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../models/weather_model.dart';
 
@@ -16,31 +18,6 @@ class WeatherProvider extends ChangeNotifier {
   Weather? get lastFetchedWheater => _lastFetchedWeather;
 
   WeatherProvider({required this.apiKey});
-
-  Future<String> readApiKey() async {
-    try {
-      var file = File('assets/api_key.txt');
-
-      if (file.exists() == false) {
-        print(
-            'Error reading API key. Make sure /assets/api_key.txt exists with the API key from OpenWeather');
-        return "";
-      } else {
-        final content = await file.readAsString();
-
-        if (content == "") {
-          print(
-              'The file /assets/api_key.txt exists but is empty. Make sure it contains the API key from OpenWeather');
-        }
-
-        return content;
-      }
-    } catch (e) {
-      print(
-          'Error reading API key. Make sure /assets/api_key.txt exists with the API key from OpenWeather');
-      return "";
-    }
-  }
 
   Future fetchWeatherForCurrentCity() async {
     var cityName = await getCurrentCity();
