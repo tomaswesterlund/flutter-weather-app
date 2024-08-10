@@ -8,8 +8,9 @@ import 'package:minimal_weather_app/widgets/sub_title_text.dart';
 import 'package:minimal_weather_app/widgets/title_text.dart';
 import 'package:provider/provider.dart';
 
-class LoadingPage extends StatelessWidget {
-  LoadingPage({super.key});
+class PermissionsPage extends StatelessWidget {
+  PermissionsPage({super.key});
+  
   @override
   Widget build(BuildContext context) {
     return Consumer<LocationProvider>(
